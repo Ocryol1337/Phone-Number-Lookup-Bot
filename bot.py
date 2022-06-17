@@ -10,29 +10,20 @@ client = commands.Bot(command_prefix = '!')
 
 
 @client.command()
-async def fakeidentitygenerator(ctx):
-    r       = requests.get(f"https://api.namefake.com/")
-    fig     = r.json()
+async def phonelookup(ctx, *, phonenum):
+    r       = requests.get(f"https://api.numlookupapi.com/v1/validate/{phonenum}?apikey=") # Get an api key from numlookupapi.com and paste it there
+    plookup     = r.json()
     em      = discord.Embed(color=000000)
     fields  = [ 
-        {'name': 'Name:',          'value': fig['name']},
-        {'name': 'Address:',     'value': fig['address']},
-        {'name': 'Latitude:',     'value': fig['latitude']},
-        {'name': 'Longitude:',   'value': fig['longitude']},
-        {'name': 'Maiden Name:',     'value': fig['maiden_name']},
-        {'name': 'Birthdate:',         'value': fig['birth_data']},
-        {'name': 'Home phone:',    'value': fig['phone_h']},
-        {'name': 'Work phone:',   'value': fig['phone_w']},
-        {'name': 'User Agent:',   'value': fig['useragent']},
-        {'name': 'IP:',   'value': fig['ipv4']},
-        {'name': 'Mac Address:',   'value': fig['macaddress']},
-        {'name': 'Company:',   'value': fig['company']},
-        {'name': 'Height:',   'value': fig['height']},
-        {'name': 'Weight:',   'value': fig['weight']},
-        {'name': 'Blood Type:',   'value': fig['blood']},
-        {'name': 'Eye Color:',   'value': fig['eye']},
-        {'name': 'Hair:',   'value': fig['hair']},
-        {'name': 'Favourite Sport:',   'value': fig['sport']},
+        {'name': 'Valid:',          'value': plookup['valid']},
+        {'name': 'Number:',     'value': plookup['number']},
+        {'name': 'Local Format:',     'value': plookup['local_format']},
+        {'name': 'International Format:',        'value': plookup['international_format']},
+        {'name': 'Country prefix:',   'value': plookup['country_prefix']},
+        {'name': 'Country Code:',     'value': plookup['country_code']},
+        {'name': 'Country Name:',         'value': plookup['country_name']},
+        {'name': 'Location',    'value': plookup['location']},
+        {'name': 'Linetype:',   'value': plookup['line_type']},
     ]
     for field in fields:
         if field['value']:
